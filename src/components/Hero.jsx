@@ -37,11 +37,11 @@ export default function Hero() {
 
         <h1 className="font-display text-6xl md:text-8xl lg:text-9xl font-light italic leading-none mb-8">
           {/* Replace with partner's name */}
-          Rania
+          Inas
         </h1>
 
         <p className="font-body text-sm tracking-[0.3em] uppercase text-white/80 mb-2">
-          August 2025
+          August 2026
         </p>
         <p className="font-body text-sm tracking-widest text-[var(--gold-light)]">
           Swiss Club · Cairo

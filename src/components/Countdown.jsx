@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import useFadeIn from '../hooks/useFadeIn';
 
 // 🔧 Change this to your actual wedding date
-const WEDDING_DATE = new Date('2025-08-01T18:00:00');
+const WEDDING_DATE = new Date('2026-08-21T18:00:00');
 
 function getTimeLeft() {
   const now = new Date();

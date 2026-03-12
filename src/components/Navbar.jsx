@@ -29,7 +29,7 @@ export default function Navbar() {
           onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
           className="font-display text-xl italic tracking-wide text-gold"
         >
-          Y & R
+          Y & I
         </button>
 
         {/* Desktop Links */}

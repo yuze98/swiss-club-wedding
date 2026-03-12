@@ -17,7 +17,7 @@ const story = [
   {
     year: '2025',
     title: 'Forever Begins',
-    text: 'Now you stand at the beginning of a lifelong adventure together. We can't wait to celebrate with you.',
+    text: "Now you stand at the beginning of a lifelong adventure together. We can't wait to celebrate with you.",
     image: '/images/story-3.jpg',
   },
 ];
