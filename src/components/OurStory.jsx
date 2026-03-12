@@ -14,13 +14,13 @@ const story = [
     image: batmanImg,
   },
   {
-    year: '2023',
+    year: '2025',
     title: 'The Proposal',
     text: 'After 3 months apart, under the open sky, with the music of a guitar and little fireworks lighting up the night — then came the ring. A moment that needed nothing more than exactly what it was.',
     image: proposalImg,
   },
   {
-    year: '2025',
+    year: '2026',
     title: 'Forever Begins',
     text: "Now you stand at the beginning of a lifelong adventure together. We can't wait to celebrate with you.",
     image: foreverImg,
