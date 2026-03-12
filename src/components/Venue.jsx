@@ -22,11 +22,11 @@ export default function Venue() {
         </div>
 
         {/* Venue Image — replace with your actual venue photo */}
-        <div className="relative object-contain w-full aspect-[16/7] overflow-hidden mb-16">
+        <div className="relative object-contain w-full aspect-[16/7] overflow-hidden mb-16 rounded-xl">
           <img
             src={venue}
             alt="Swiss Club Venue"
-            className="w-full h-full object-cover"
+            className="w-full h-full object-fill"
             onError={(e) => {
               e.target.style.display = 'none';
               e.target.parentElement.style.background = 'var(--gold-light)';
@@ -39,7 +39,6 @@ export default function Venue() {
             }}
           />
           {/* Gold frame overlay */}
-          <div className="absolute inset-3 border border-white/20 pointer-events-none" />
         </div>
 
         {/* Details Grid */}
