@@ -1,24 +1,29 @@
 import useFadeIn from '../hooks/useFadeIn';
 
+// import images from src so bundler handles them and path issues disappear
+import batmanImg from '../assets/images/the-batman.jpg';
+import proposalImg from '../assets/images/proposal.gif';
+import foreverImg from '../assets/images/iy.jpeg';
+
 // 🔧 Replace with your actual story and photos
 const story = [
   {
-    year: '2021',
+    year: '2022',
     title: 'How We Met',
     text: 'Share your story here — where you first met, what made that moment special, and how it all began.',
-    image: '/images/story-1.jpg',
+    image: batmanImg,
   },
   {
     year: '2023',
     title: 'The Proposal',
     text: 'Tell your proposal story here — the setting, the moment, and what you said to each other.',
-    image: '/images/story-2.jpg',
+    image: proposalImg,
   },
   {
     year: '2025',
     title: 'Forever Begins',
     text: "Now you stand at the beginning of a lifelong adventure together. We can't wait to celebrate with you.",
-    image: '/images/story-3.jpg',
+    image: foreverImg,
   },
 ];
 
@@ -44,11 +49,11 @@ export default function OurStory() {
               }`}
             >
               {/* Image */}
-              <div className="w-full md:w-1/2 aspect-[4/3] overflow-hidden">
+              <div className="w-full md:w-1/2 aspect-[5/4] overflow-hidden">
                 <img
                   src={item.image}
                   alt={item.title}
-                  className="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-700"
+                  className="w-full h-full object-contain grayscale hover:grayscale-0 transition-all duration-700"
                   onError={(e) => {
                     e.target.style.display = 'none';
                     e.target.parentElement.classList.add('bg-[var(--gold-light)]', 'flex', 'items-center', 'justify-center');

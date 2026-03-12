@@ -1,9 +1,10 @@
 import useFadeIn from '../hooks/useFadeIn';
+import venue from '../assets/images/venue.png';
 
 // 🔧 Replace with your actual venue details and photos
 const venueDetails = [
   { icon: '📍', label: 'Location', value: 'Swiss Club, Cairo, Egypt' },
-  { icon: '📅', label: 'Date', value: 'August 1, 2025' },
+  { icon: '📅', label: 'Date', value: 'August 21, 2026' },
   { icon: '🕕', label: 'Time', value: '6:00 PM' },
   { icon: '👗', label: 'Dress Code', value: 'Formal / Black Tie' },
 ];
@@ -21,9 +22,9 @@ export default function Venue() {
         </div>
 
         {/* Venue Image — replace with your actual venue photo */}
-        <div className="relative w-full aspect-[16/7] overflow-hidden mb-16">
+        <div className="relative object-contain w-full aspect-[16/7] overflow-hidden mb-16">
           <img
-            src="/images/venue.jpg"
+            src={venue}
             alt="Swiss Club Venue"
             className="w-full h-full object-cover"
             onError={(e) => {
