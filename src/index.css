@@ -1,0 +1,73 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Jost:wght@300;400;500&display=swap');
+
+:root {
+  --cream: #faf7f2;
+  --gold: #c9a84c;
+  --gold-light: #e8d5a3;
+  --dark: #1a1a1a;
+  --muted: #7a7065;
+}
+
+@layer base {
+  body {
+    background-color: var(--cream);
+    color: var(--dark);
+  }
+  h1, h2, h3 {
+    font-family: 'Cormorant Garamond', serif;
+  }
+  p, span, button, input, label {
+    font-family: 'Jost', sans-serif;
+  }
+}
+
+@layer utilities {
+  .font-display {
+    font-family: 'Cormorant Garamond', serif;
+  }
+  .font-body {
+    font-family: 'Jost', sans-serif;
+  }
+  .bg-cream {
+    background-color: var(--cream);
+  }
+  .text-gold {
+    color: var(--gold);
+  }
+  .border-gold {
+    border-color: var(--gold);
+  }
+  .bg-gold {
+    background-color: var(--gold);
+  }
+}
+
+/* Scroll fade-in animation */
+.fade-in {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 0.8s ease, transform 0.8s ease;
+}
+.fade-in.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Divider ornament */
+.ornament {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  justify-content: center;
+}
+.ornament::before,
+.ornament::after {
+  content: '';
+  height: 1px;
+  width: 80px;
+  background: var(--gold-light);
+}
