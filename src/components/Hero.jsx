@@ -17,10 +17,11 @@ export default function Hero() {
         background: 'linear-gradient(160deg, rgba(0,0,0,0.65) 0%, rgba(0,0,0,0.45) 50%, rgba(0,0,0,0.70) 100%)'
       }} />
 
-      {/* Decorative double border */}
-      <div className="absolute inset-4 md:inset-8 border border-white/20 pointer-events-none" />
-      <div className="absolute inset-6 md:inset-10 border border-white/10 pointer-events-none" />
-
+    {/* Decorative double border */}
+<div className="absolute pointer-events-none"
+  style={{ top: '72px', bottom: '16px', left: '16px', right: '16px', border: '1px solid rgba(255,255,255,0.2)' }} />
+<div className="absolute pointer-events-none"
+  style={{ top: '80px', bottom: '24px', left: '24px', right: '24px', border: '1px solid rgba(255,255,255,0.1)' }} />
       {/* Content */}
       <div className="relative z-10 text-center px-6">
         <p className="font-body text-xs tracking-[0.5em] uppercase text-[var(--gold-light)] mb-6">
