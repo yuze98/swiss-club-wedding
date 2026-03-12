@@ -7,21 +7,20 @@ export default function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [theme, setTheme] = useState('default');
 
-  // define palettes for dynamic theming
   const palettes = {
     default: {
-      cream: '#f5ebe0',
-      gold: '#c1683a',
-      'gold-light': '#e5bba4',
-      dark: '#4a2e2a',
-      muted: '#8c6b63',
+      cream: '#faf4ee',
+      gold: '#b85c38',
+      'gold-light': '#e8c4a8',
+      dark: '#3b2218',
+      muted: '#9c6e5a',
     },
     dark: {
-      cream: '#0a141f',
-      gold: '#3e97c5',
-      'gold-light': '#1a445b',
-      dark: '#b5d1d5',
-      muted: '#73949c',
+      cream: '#f4f7f0',
+      gold: '#3d6b45',
+      'gold-light': '#8fb896',
+      dark: '#1c2b1e',
+      muted: '#5a7260',
     },
   };
 
@@ -54,10 +53,13 @@ export default function Navbar() {
       }`}
     >
       <div className="max-w-5xl mx-auto px-6 flex items-center justify-between">
+
         {/* Logo */}
         <button
           onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
-          className="font-display text-xl italic tracking-wide text-gold"
+          className={`font-display text-xl italic tracking-wide transition-colors duration-300 ${
+            scrolled ? 'text-[var(--gold)]' : 'text-white'
+          }`}
         >
           Y & I
         </button>
@@ -68,30 +70,45 @@ export default function Navbar() {
             <li key={link}>
               <button
                 onClick={() => scrollTo(link)}
-                className="font-body text-sm tracking-widest uppercase text-[var(--muted)] hover:text-gold transition-colors"
+                className={`font-body text-sm tracking-widest uppercase transition-colors duration-300 hover:text-[var(--gold)] ${
+                  scrolled ? 'text-[var(--muted)]' : 'text-white/80'
+                }`}
               >
                 {link}
               </button>
             </li>
           ))}
         </ul>
-        {/* Theme toggle */}
-        <button
-          onClick={() => setTheme(theme === 'default' ? 'dark' : 'default')}
-          className="ml-4 px-2 py-1 text-xs rounded border border-gold text-gold hover:bg-gold-light transition-colors"
-        >
-          {theme === 'default' ? 'Terracotta' : 'Grassy'}
-        </button>
 
-        {/* Mobile Hamburger */}
-        <button
-          className="md:hidden flex flex-col gap-1.5 p-1"
-          onClick={() => setMenuOpen(!menuOpen)}
-        >
-          <span className={`block h-px w-6 bg-[var(--dark)] transition-all ${menuOpen ? 'rotate-45 translate-y-2' : ''}`} />
-          <span className={`block h-px w-6 bg-[var(--dark)] transition-all ${menuOpen ? 'opacity-0' : ''}`} />
-          <span className={`block h-px w-6 bg-[var(--dark)] transition-all ${menuOpen ? '-rotate-45 -translate-y-2' : ''}`} />
-        </button>
+        <div className="flex items-center gap-3">
+          {/* Theme toggle */}
+          <button
+            onClick={() => setTheme(theme === 'default' ? 'dark' : 'default')}
+            className={`px-3 py-1 text-xs rounded border font-body tracking-widest uppercase transition-colors duration-300 ${
+              scrolled
+                ? 'border-[var(--gold)] text-[var(--gold)] hover:bg-[var(--gold-light)]'
+                : 'border-white/60 text-white/80 hover:bg-white/10'
+            }`}
+          >
+            {theme === 'default' ? '🌿 Grassy' : '🍂 Terracotta'}
+          </button>
+
+          {/* Mobile Hamburger */}
+          <button
+            className="md:hidden flex flex-col gap-1.5 p-1"
+            onClick={() => setMenuOpen(!menuOpen)}
+          >
+            <span className={`block h-px w-6 transition-all duration-300 ${
+              scrolled ? 'bg-[var(--dark)]' : 'bg-white'
+            } ${menuOpen ? 'rotate-45 translate-y-2' : ''}`} />
+            <span className={`block h-px w-6 transition-all duration-300 ${
+              scrolled ? 'bg-[var(--dark)]' : 'bg-white'
+            } ${menuOpen ? 'opacity-0' : ''}`} />
+            <span className={`block h-px w-6 transition-all duration-300 ${
+              scrolled ? 'bg-[var(--dark)]' : 'bg-white'
+            } ${menuOpen ? '-rotate-45 -translate-y-2' : ''}`} />
+          </button>
+        </div>
       </div>
 
       {/* Mobile Menu */}
@@ -101,11 +118,19 @@ export default function Navbar() {
             <button
               key={link}
               onClick={() => scrollTo(link)}
-              className="text-left font-body text-sm tracking-widest uppercase text-[var(--muted)] hover:text-gold transition-colors"
+              className="text-left font-body text-sm tracking-widest uppercase text-[var(--muted)] hover:text-[var(--gold)] transition-colors"
             >
               {link}
             </button>
           ))}
+          <div className="pt-2 border-t border-[var(--gold-light)]">
+            <button
+              onClick={() => setTheme(theme === 'default' ? 'dark' : 'default')}
+              className="font-body text-xs tracking-widest uppercase text-[var(--muted)] hover:text-[var(--gold)] transition-colors"
+            >
+              {theme === 'default' ? '🌿 Switch to Grassy' : '🍂 Switch to Terracotta'}
+            </button>
+          </div>
         </div>
       )}
     </nav>
