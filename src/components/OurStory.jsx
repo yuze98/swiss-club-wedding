@@ -10,13 +10,13 @@ const story = [
   {
     year: '2022',
     title: 'How We Met',
-    text: 'Share your story here — where you first met, what made that moment special, and how it all began.',
+    text: 'Sharing the same night without knowing what it would one day mean. Sometimes life keeps two people apart, yet never truly far, until the moment is just right — and three years between that moment and everything that followed.',
     image: batmanImg,
   },
   {
     year: '2023',
     title: 'The Proposal',
-    text: 'Tell your proposal story here — the setting, the moment, and what you said to each other.',
+    text: 'After 3 months apart, under the open sky, with the music of a guitar and little fireworks lighting up the night — then came the ring. A moment that needed nothing more than exactly what it was.',
     image: proposalImg,
   },
   {
