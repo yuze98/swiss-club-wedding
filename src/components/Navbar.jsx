@@ -5,6 +5,36 @@ const links = ['Story', 'Venue', 'Countdown', 'Guests'];
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
+  const [theme, setTheme] = useState('default');
+
+  // define palettes for dynamic theming
+  const palettes = {
+    default: {
+      cream: '#f5ebe0',
+      gold: '#c1683a',
+      'gold-light': '#e5bba4',
+      dark: '#4a2e2a',
+      muted: '#8c6b63',
+    },
+    dark: {
+      cream: '#0a141f',
+      gold: '#3e97c5',
+      'gold-light': '#1a445b',
+      dark: '#b5d1d5',
+      muted: '#73949c',
+    },
+  };
+
+  const applyPalette = (p) => {
+    const root = document.documentElement;
+    Object.entries(palettes[p]).forEach(([key, val]) => {
+      root.style.setProperty(`--${key}`, val);
+    });
+  };
+
+  useEffect(() => {
+    applyPalette(theme);
+  }, [theme]);
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 40);
@@ -45,6 +75,13 @@ export default function Navbar() {
             </li>
           ))}
         </ul>
+        {/* Theme toggle */}
+        <button
+          onClick={() => setTheme(theme === 'default' ? 'dark' : 'default')}
+          className="ml-4 px-2 py-1 text-xs rounded border border-gold text-gold hover:bg-gold-light transition-colors"
+        >
+          {theme === 'default' ? 'Terracotta' : 'Grassy'}
+        </button>
 
         {/* Mobile Hamburger */}
         <button

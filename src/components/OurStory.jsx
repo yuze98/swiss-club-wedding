@@ -36,7 +36,7 @@ export default function OurStory() {
         {/* Header */}
         <div className="text-center mb-20">
           <p className="font-body text-xs tracking-[0.4em] uppercase text-gold mb-4">A love story</p>
-          <h2 className="font-display text-4xl md:text-5xl italic font-light">Our Story</h2>
+          <h2 className="font-display text-4xl md:text-5xl italic font-light text-gold">Our Story</h2>
         </div>
 
         {/* Timeline */}
@@ -65,9 +65,9 @@ export default function OurStory() {
               {/* Text */}
               <div className="w-full md:w-1/2 text-center md:text-left px-4">
                 <span className="font-body text-xs tracking-[0.4em] uppercase text-gold">{item.year}</span>
-                <h3 className="font-display text-3xl italic font-light mt-2 mb-4">{item.title}</h3>
-                <div className="w-12 h-px bg-[var(--gold-light)] mb-4 mx-auto md:mx-0" />
-                <p className="font-body text-sm leading-relaxed text-[var(--muted)]">{item.text}</p>
+                <h3 className="font-display text-3xl italic font-light mt-2 mb-4 text-gold">{item.title}</h3>
+                <div className="w-12 h-px bg-gold mb-4 mx-auto md:mx-0" />
+                <p className="font-body text-sm leading-relaxed text-[var(--dark)]">{item.text}</p>
               </div>
             </div>
           ))}

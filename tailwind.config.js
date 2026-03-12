@@ -4,8 +4,8 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        gold: '#c9a84c',
-        cream: '#faf7f2',
+        gold: '#c1683a',      // terracotta primary accent
+        cream: '#f5ebe0',     // warm cream background
       },
       fontFamily: {
         display: ['Cormorant Garamond', 'serif'],

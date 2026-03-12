@@ -5,11 +5,12 @@
 @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Jost:wght@300;400;500&display=swap');
 
 :root {
-  --cream: #faf7f2;
-  --gold: #c9a84c;
-  --gold-light: #e8d5a3;
-  --dark: #1a1a1a;
-  --muted: #7a7065;
+  /* brighter, happier greenery/earthy palette */
+  --cream: #35533d;   /* soft mint background */
+  --gold: #5d7c1f;    /* olive drab green primary */
+  --gold-light: #a3c293; /* light sage accent */
+  --dark: #afafaf;    /* dark text */
+  --muted: #161d09;   /* muted olive for secondary text */
 }
 
 @layer base {

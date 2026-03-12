@@ -1,20 +1,23 @@
 // Replace the src values below with your actual couple photo
 // Place your image in: public/images/couple.jpg
 
+import swissLogo from '../assets/images/swiss.png';
+
 export default function Hero() {
   return (
     <section
       id="hero"
       className="relative min-h-screen flex items-center justify-center overflow-hidden"
     >
+    
       {/* Background image — replace with your couple photo */}
       <div
         className="absolute inset-0 bg-cover bg-center bg-no-repeat"
         style={{ backgroundImage: "url('/images/couple.jpg')" }}
       />
 
-      {/* Dark overlay */}
-      <div className="absolute inset-0 bg-black/40" />
+      {/* Greenish overlay */}
+      <div className="absolute inset-0 bg-green-900/30" />
 
       {/* Gold decorative border */}
       <div className="absolute inset-4 md:inset-8 border border-[var(--gold-light)] opacity-40 pointer-events-none" />
@@ -46,6 +49,12 @@ export default function Hero() {
         <p className="font-body text-sm tracking-widest text-[var(--gold-light)]">
           Swiss Club · Cairo
         </p>
+        {/* logo under location */}
+        <img
+          src={swissLogo}
+          alt="Swiss Club logo"
+          className="mx-auto mt-2 w-16 h-auto opacity-80"
+        />
 
         {/* Scroll indicator */}
         <div className="absolute bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 animate-bounce">
