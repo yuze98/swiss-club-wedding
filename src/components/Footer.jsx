@@ -10,9 +10,9 @@ export default function Footer() {
         <div className="w-16 h-px bg-[var(--gold-light)] opacity-30 mx-auto mb-8" />
 
         <p className="font-display text-lg italic text-white/50">
-          "And He placed between you affection and mercy."
+          "وَجَعَلَ بَيْنَكُم مَّوَدَّةً وَرَحْمَةً ۚ"
         </p>
-        <p className="font-body text-xs text-white/30 mt-2">— Quran 30:21</p>
+        <p className="font-body text-xs text-white/30 mt-2">— آية 21 من سورة الروم</p>
 
         <p className="font-body text-xs text-white/20 mt-12">
           Made with love for Youssef & Inas's wedding
