@@ -50,13 +50,10 @@ export default function Countdown() {
           The Big Day
         </h2>
 
-        <div className="flex justify-center items-center gap-8 md:gap-16">
+        <div className="grid grid-cols-2 gap-6 sm:flex sm:justify-center sm:items-center sm:gap-8 md:gap-16">
           <TimeUnit value={time.days} label="Days" />
-          <span className="font-display text-4xl text-[var(--gold-light)] mb-4">·</span>
           <TimeUnit value={time.hours} label="Hours" />
-          <span className="font-display text-4xl text-[var(--gold-light)] mb-4">·</span>
           <TimeUnit value={time.minutes} label="Minutes" />
-          <span className="font-display text-4xl text-[var(--gold-light)] mb-4">·</span>
           <TimeUnit value={time.seconds} label="Seconds" />
         </div>
       </div>

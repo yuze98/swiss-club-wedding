@@ -116,7 +116,7 @@ export default function GuestList() {
         </div>
 
         {/* Stats */}
-        <div className="grid grid-cols-4 gap-4 mb-12">
+        <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 mb-12">
           {[
             { label: 'Total', value: counts.total },
             { label: 'Confirmed', value: counts.confirmed },
@@ -257,7 +257,7 @@ export default function GuestList() {
         </div>
 
         {/* Legend */}
-        <div className="flex items-center gap-4 mb-4 font-body text-xs text-[var(--muted)]">
+        <div className="flex flex-wrap items-center gap-3 sm:gap-4 mb-4 font-body text-xs text-[var(--muted)]">
           <span className="flex items-center gap-1"><span className="w-2.5 h-2.5 rounded-full bg-blue-400 inline-block"></span> Groom's Side</span>
           <span className="flex items-center gap-1"><span className="w-2.5 h-2.5 rounded-full bg-pink-400 inline-block"></span> Bride's Side</span>
           <span className="flex items-center gap-1"><span className="w-2.5 h-2.5 rounded-full bg-white border border-gray-300 inline-block"></span> Both Sides</span>
@@ -352,25 +352,29 @@ export default function GuestList() {
                     </div>
                   </div>
                 ) : (
-                  <div className="flex items-center justify-between">
-                    <span className={`w-3 h-3 rounded-full flex-shrink-0 mr-3 ${SIDE_COLORS[guest.side] || SIDE_COLORS.both}`} title={guest.side === 'both' ? 'Both Sides' : `${guest.side}'s Side`}></span>
-                    <div className="flex-1 min-w-0">
-                      <p className="font-body text-sm font-medium text-[var(--dark)]">
-                        {guest.name}
-                        {guest.plusOnes > 0 && <span className="text-xs text-[var(--muted)] ml-2">+{guest.plusOnes}</span>}
-                      </p>
-                      <p className="font-body text-xs text-[var(--muted)] mt-0.5">
-                        Added {formatDate(guest.addedAt)}
-                        {guest.notes && <span className="ml-2">· {guest.notes}</span>}
-                      </p>
+                  <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+                    <div className="flex items-center min-w-0 flex-1">
+                      <span className={`w-3 h-3 rounded-full flex-shrink-0 mr-3 ${SIDE_COLORS[guest.side] || SIDE_COLORS.both}`} title={guest.side === 'both' ? 'Both Sides' : `${guest.side}'s Side`}></span>
+                      <div className="min-w-0">
+                        <p className="font-body text-sm font-medium text-[var(--dark)]">
+                          {guest.name}
+                          {guest.plusOnes > 0 && <span className="text-xs text-[var(--muted)] ml-2">+{guest.plusOnes}</span>}
+                        </p>
+                        <p className="font-body text-xs text-[var(--muted)] mt-0.5">
+                          Added {formatDate(guest.addedAt)}
+                          {guest.notes && <span className="ml-2">· {guest.notes}</span>}
+                        </p>
+                      </div>
                     </div>
+
+                    <div className="flex items-center gap-2 ml-6 sm:ml-0 flex-shrink-0">
 
                     {/* RSVP Selector */}
                     <select
                       value={guest.rsvp}
                       onChange={(e) => updateRsvp(guest.id, e.target.value)}
                       disabled={!unlocked}
-                      className={`font-body text-xs px-3 py-1 rounded-full border-0 mr-4 ${RSVP_COLORS[guest.rsvp]} ${unlocked ? 'cursor-pointer' : 'cursor-not-allowed opacity-50'}`}
+                      className={`font-body text-xs px-3 py-1 rounded-full border-0 ${RSVP_COLORS[guest.rsvp]} ${unlocked ? 'cursor-pointer' : 'cursor-not-allowed opacity-50'}`}
                     >
                       <option value="pending">Pending</option>
                       <option value="confirmed">Confirmed</option>
@@ -408,7 +412,7 @@ export default function GuestList() {
                         }
                       }}
                       disabled={!unlocked || removingId === guest.id}
-                      className={`text-sm font-body ml-2 px-2 py-1 rounded transition-colors ${
+                      className={`text-sm font-body px-2 py-1 rounded transition-colors ${
                         !unlocked || removingId === guest.id
                           ? 'text-gray-300 cursor-not-allowed'
                           : 'text-gray-400 hover:text-red-500 hover:bg-red-50'
@@ -417,6 +421,7 @@ export default function GuestList() {
                     >
                       {removingId === guest.id ? 'Removing...' : 'Remove'}
                     </button>
+                    </div>
                   </div>
                 )}
               </div>
