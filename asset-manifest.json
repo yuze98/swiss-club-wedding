@@ -1,20 +1,20 @@
 {
   "files": {
-    "main.css": "/swiss-club-wedding/static/css/main.8e4a334b.css",
-    "main.js": "/swiss-club-wedding/static/js/main.f5c4daec.js",
-    "static/js/453.6fb34276.chunk.js": "/swiss-club-wedding/static/js/453.6fb34276.chunk.js",
+    "main.css": "/swiss-club-wedding/static/css/main.53c0b614.css",
+    "main.js": "/swiss-club-wedding/static/js/main.b74a710b.js",
+    "static/js/453.f17627bf.chunk.js": "/swiss-club-wedding/static/js/453.f17627bf.chunk.js",
     "static/media/proposal.gif": "/swiss-club-wedding/static/media/proposal.1d8f4fe6ba0d5a8ad1f7.gif",
     "static/media/venue.png": "/swiss-club-wedding/static/media/venue.a1ca305155f620cd175e.png",
     "static/media/the-batman.jpg": "/swiss-club-wedding/static/media/the-batman.6d6ca036057ff019d03b.jpg",
     "static/media/swiss.png": "/swiss-club-wedding/static/media/swiss.6bda8912f8e5ccfa1de7.png",
     "static/media/iy.jpeg": "/swiss-club-wedding/static/media/iy.b4708a8d67a72e6aa7b3.jpeg",
     "index.html": "/swiss-club-wedding/index.html",
-    "main.8e4a334b.css.map": "/swiss-club-wedding/static/css/main.8e4a334b.css.map",
-    "main.f5c4daec.js.map": "/swiss-club-wedding/static/js/main.f5c4daec.js.map",
-    "453.6fb34276.chunk.js.map": "/swiss-club-wedding/static/js/453.6fb34276.chunk.js.map"
+    "main.53c0b614.css.map": "/swiss-club-wedding/static/css/main.53c0b614.css.map",
+    "main.b74a710b.js.map": "/swiss-club-wedding/static/js/main.b74a710b.js.map",
+    "453.f17627bf.chunk.js.map": "/swiss-club-wedding/static/js/453.f17627bf.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.8e4a334b.css",
-    "static/js/main.f5c4daec.js"
+    "static/css/main.53c0b614.css",
+    "static/js/main.b74a710b.js"
   ]
 }
