@@ -56,22 +56,25 @@ function handleGetGuests() {
   const sheet = getSheet();
   const data = sheet.getDataRange().getValues();
 
-  if (data.length <= 1) {
+  if (data.length === 0) {
     return jsonResponse({ guests: [] });
   }
 
-  const headers = data[0];
-  const guests = data.slice(1).map((row) => ({
-    name: row[0],
-    side: row[1],
-    rsvp: row[2],
-    addedDate: row[3],
-    addedTime: row[4],
-    email: row[5] || "",
-    phone: row[6] || "",
+  // Check if first row is a header (first cell is "Name" case-insensitive)
+  const hasHeader = data[0][0].toString().toLowerCase().trim() === "name";
+  const rows = hasHeader ? data.slice(1) : data;
+
+  const guests = rows.map((row) => ({
+    name: row[0] ? row[0].toString() : "",
+    side: row[1] ? row[1].toString() : "",
+    rsvp: row[2] ? row[2].toString() : "pending",
+    addedDate: row[3] ? row[3].toString() : "",
+    addedTime: row[4] ? row[4].toString() : "",
+    email: row[5] ? row[5].toString() : "",
+    phone: row[6] ? row[6].toString() : "",
     plusOnes: row[7] || 0,
-    dietaryRestrictions: row[8] || "",
-    notes: row[9] || "",
+    dietaryRestrictions: row[8] ? row[8].toString() : "",
+    notes: row[9] ? row[9].toString() : "",
   }));
 
   return jsonResponse({ guests });
@@ -80,9 +83,9 @@ function handleGetGuests() {
 function handleCheckDuplicate(name) {
   const sheet = getSheet();
   const data = sheet.getDataRange().getValues();
-  const names = data
-    .slice(1)
-    .map((row) => row[0].toString().toLowerCase().trim());
+  const hasHeader = data.length > 0 && data[0][0].toString().toLowerCase().trim() === "name";
+  const rows = hasHeader ? data.slice(1) : data;
+  const names = rows.map((row) => row[0].toString().toLowerCase().trim());
   const isDuplicate = names.includes(name.toLowerCase().trim());
   return jsonResponse({ isDuplicate });
 }
@@ -92,9 +95,9 @@ function handleAddGuest(guest) {
   const data = sheet.getDataRange().getValues();
 
   // Check duplicate
-  const names = data
-    .slice(1)
-    .map((row) => row[0].toString().toLowerCase().trim());
+  const hasHeader = data.length > 0 && data[0][0].toString().toLowerCase().trim() === "name";
+  const rows = hasHeader ? data.slice(1) : data;
+  const names = rows.map((row) => row[0].toString().toLowerCase().trim());
   if (names.includes(guest.name.toLowerCase().trim())) {
     return jsonResponse({ error: "Guest already exists", duplicate: true });
   }
@@ -119,8 +122,10 @@ function handleAddGuest(guest) {
 function handleRemoveGuest(name) {
   const sheet = getSheet();
   const data = sheet.getDataRange().getValues();
+  const hasHeader = data.length > 0 && data[0][0].toString().toLowerCase().trim() === "name";
+  const startIdx = hasHeader ? 1 : 0;
 
-  for (let i = 1; i < data.length; i++) {
+  for (let i = startIdx; i < data.length; i++) {
     if (
       data[i][0].toString().toLowerCase().trim() === name.toLowerCase().trim()
     ) {
@@ -135,8 +140,10 @@ function handleRemoveGuest(name) {
 function handleUpdateRsvp(name, rsvp) {
   const sheet = getSheet();
   const data = sheet.getDataRange().getValues();
+  const hasHeader = data.length > 0 && data[0][0].toString().toLowerCase().trim() === "name";
+  const startIdx = hasHeader ? 1 : 0;
 
-  for (let i = 1; i < data.length; i++) {
+  for (let i = startIdx; i < data.length; i++) {
     if (
       data[i][0].toString().toLowerCase().trim() === name.toLowerCase().trim()
     ) {

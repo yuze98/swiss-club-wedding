@@ -7,9 +7,16 @@ const BASE_URL = config.GOOGLE_SHEETS_URL;
  */
 export async function fetchGuests() {
   const url = `${BASE_URL}?action=getGuests`;
-  const response = await fetch(url);
-  if (!response.ok) throw new Error('Failed to fetch guests');
-  const data = await response.json();
+  const response = await fetch(url, { redirect: 'follow' });
+  const text = await response.text();
+  let data;
+  try {
+    data = JSON.parse(text);
+  } catch (e) {
+    console.error('Google Sheets response was not JSON:', text.substring(0, 500));
+    throw new Error('Failed to parse guest list response');
+  }
+  if (data.error) throw new Error(data.error);
   return data.guests || [];
 }
 
@@ -18,9 +25,15 @@ export async function fetchGuests() {
  */
 export async function checkDuplicate(name) {
   const url = `${BASE_URL}?action=checkDuplicate&name=${encodeURIComponent(name)}`;
-  const response = await fetch(url);
-  if (!response.ok) throw new Error('Failed to check duplicate');
-  const data = await response.json();
+  const response = await fetch(url, { redirect: 'follow' });
+  const text = await response.text();
+  let data;
+  try {
+    data = JSON.parse(text);
+  } catch (e) {
+    console.error('checkDuplicate response was not JSON:', text.substring(0, 500));
+    throw new Error('Failed to check duplicate');
+  }
   return data.isDuplicate;
 }
 
@@ -30,11 +43,18 @@ export async function checkDuplicate(name) {
 export async function addGuestToSheet(guest) {
   const response = await fetch(BASE_URL, {
     method: 'POST',
-    headers: { 'Content-Type': 'text/plain' }, // Apps Script requires text/plain for CORS
+    redirect: 'follow',
+    headers: { 'Content-Type': 'text/plain' },
     body: JSON.stringify({ action: 'addGuest', guest }),
   });
-  if (!response.ok) throw new Error('Failed to add guest');
-  const data = await response.json();
+  const text = await response.text();
+  let data;
+  try {
+    data = JSON.parse(text);
+  } catch (e) {
+    console.error('addGuest response was not JSON:', text.substring(0, 500));
+    throw new Error('Failed to add guest');
+  }
   if (data.duplicate) throw new Error('Guest already exists in the sheet');
   if (data.error) throw new Error(data.error);
   return data;
@@ -46,11 +66,18 @@ export async function addGuestToSheet(guest) {
 export async function removeGuestFromSheet(name) {
   const response = await fetch(BASE_URL, {
     method: 'POST',
+    redirect: 'follow',
     headers: { 'Content-Type': 'text/plain' },
     body: JSON.stringify({ action: 'removeGuest', name }),
   });
-  if (!response.ok) throw new Error('Failed to remove guest');
-  const data = await response.json();
+  const text = await response.text();
+  let data;
+  try {
+    data = JSON.parse(text);
+  } catch (e) {
+    console.error('removeGuest response was not JSON:', text.substring(0, 500));
+    throw new Error('Failed to remove guest');
+  }
   if (data.error) throw new Error(data.error);
   return data;
 }
@@ -61,11 +88,18 @@ export async function removeGuestFromSheet(name) {
 export async function updateRsvpInSheet(name, rsvp) {
   const response = await fetch(BASE_URL, {
     method: 'POST',
+    redirect: 'follow',
     headers: { 'Content-Type': 'text/plain' },
     body: JSON.stringify({ action: 'updateRsvp', name, rsvp }),
   });
-  if (!response.ok) throw new Error('Failed to update RSVP');
-  const data = await response.json();
+  const text = await response.text();
+  let data;
+  try {
+    data = JSON.parse(text);
+  } catch (e) {
+    console.error('updateRsvp response was not JSON:', text.substring(0, 500));
+    throw new Error('Failed to update RSVP');
+  }
   if (data.error) throw new Error(data.error);
   return data;
 }

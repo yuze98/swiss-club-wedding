@@ -15,40 +15,44 @@ export default function useGuestList() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
-  // Load guests from Google Sheets on mount, fallback to localStorage
-  useEffect(() => {
-    async function loadGuests() {
-      setLoading(true);
+  // Load guests from Google Sheets, fallback to localStorage
+  const loadGuests = useCallback(async () => {
+    setLoading(true);
+    setError(null);
+    try {
+      const sheetGuests = await fetchGuests();
+      const mapped = sheetGuests.map((g, i) => ({
+        id: Date.now() + i,
+        name: g.name,
+        side: g.side || 'both',
+        rsvp: (g.rsvp || 'pending').toLowerCase(),
+        addedAt: g.addedDate || '',
+        email: g.email || '',
+        phone: g.phone || '',
+        plusOnes: g.plusOnes || 0,
+        dietaryRestrictions: g.dietaryRestrictions || '',
+        notes: g.notes || '',
+      }));
+      setGuests(mapped);
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(mapped));
+    } catch (e) {
+      console.error('Failed to load from Google Sheets:', e);
+      setError(`Failed to load from Google Sheets: ${e.message}`);
       try {
-        const sheetGuests = await fetchGuests();
-        const mapped = sheetGuests.map((g, i) => ({
-          id: Date.now() + i,
-          name: g.name,
-          side: g.side || 'both',
-          rsvp: g.rsvp || 'pending',
-          addedAt: g.addedDate || '',
-          email: g.email || '',
-          phone: g.phone || '',
-          plusOnes: g.plusOnes || 0,
-          dietaryRestrictions: g.dietaryRestrictions || '',
-          notes: g.notes || '',
-        }));
-        setGuests(mapped);
-        localStorage.setItem(STORAGE_KEY, JSON.stringify(mapped));
-      } catch (e) {
-        console.error('Failed to load from Google Sheets, using localStorage:', e);
-        try {
-          const saved = localStorage.getItem(STORAGE_KEY);
-          if (saved) setGuests(JSON.parse(saved));
-        } catch (localErr) {
-          console.error('Failed to load from localStorage:', localErr);
-        }
-      } finally {
-        setLoading(false);
+        const saved = localStorage.getItem(STORAGE_KEY);
+        if (saved) setGuests(JSON.parse(saved));
+      } catch (localErr) {
+        console.error('Failed to load from localStorage:', localErr);
       }
+    } finally {
+      setLoading(false);
     }
-    loadGuests();
   }, []);
+
+  // Load on mount
+  useEffect(() => {
+    loadGuests();
+  }, [loadGuests]);
 
   // Save to localStorage as backup whenever guests change
   useEffect(() => {
@@ -162,5 +166,5 @@ export default function useGuestList() {
     declined: guests.filter((g) => g.rsvp === 'declined').length,
   };
 
-  return { guests, addGuest, removeGuest, updateRsvp, counts, loading, error, clearError };
+  return { guests, addGuest, removeGuest, updateRsvp, counts, loading, error, clearError, refresh: loadGuests };
 }

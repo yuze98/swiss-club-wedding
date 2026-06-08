@@ -232,11 +232,15 @@ export default function GuestList() {
 
                 {/* Remove */}
                 <button
-                  onClick={() => removeGuest(guest.id)}
-                  className="text-gray-300 hover:text-red-400 transition-colors text-lg leading-none"
+                  onClick={() => {
+                    if (window.confirm(`Remove "${guest.name}" from the guest list?`)) {
+                      removeGuest(guest.id);
+                    }
+                  }}
+                  className="text-gray-400 hover:text-red-500 transition-colors text-sm font-body ml-2 px-2 py-1 hover:bg-red-50 rounded"
                   title="Remove guest"
                 >
-                  ×
+                  Remove
                 </button>
               </div>
             ))}
