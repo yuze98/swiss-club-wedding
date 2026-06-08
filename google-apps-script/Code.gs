@@ -49,6 +49,10 @@ function doPost(e) {
     return handleUpdateRsvp(data.name, data.rsvp);
   }
 
+  if (action === "updateGuest") {
+    return handleUpdateGuest(data.originalName, data.guest);
+  }
+
   return jsonResponse({ error: "Unknown action" }, 400);
 }
 
@@ -83,7 +87,8 @@ function handleGetGuests() {
 function handleCheckDuplicate(name) {
   const sheet = getSheet();
   const data = sheet.getDataRange().getValues();
-  const hasHeader = data.length > 0 && data[0][0].toString().toLowerCase().trim() === "name";
+  const hasHeader =
+    data.length > 0 && data[0][0].toString().toLowerCase().trim() === "name";
   const rows = hasHeader ? data.slice(1) : data;
   const names = rows.map((row) => row[0].toString().toLowerCase().trim());
   const isDuplicate = names.includes(name.toLowerCase().trim());
@@ -95,7 +100,8 @@ function handleAddGuest(guest) {
   const data = sheet.getDataRange().getValues();
 
   // Check duplicate
-  const hasHeader = data.length > 0 && data[0][0].toString().toLowerCase().trim() === "name";
+  const hasHeader =
+    data.length > 0 && data[0][0].toString().toLowerCase().trim() === "name";
   const rows = hasHeader ? data.slice(1) : data;
   const names = rows.map((row) => row[0].toString().toLowerCase().trim());
   if (names.includes(guest.name.toLowerCase().trim())) {
@@ -122,7 +128,8 @@ function handleAddGuest(guest) {
 function handleRemoveGuest(name) {
   const sheet = getSheet();
   const data = sheet.getDataRange().getValues();
-  const hasHeader = data.length > 0 && data[0][0].toString().toLowerCase().trim() === "name";
+  const hasHeader =
+    data.length > 0 && data[0][0].toString().toLowerCase().trim() === "name";
   const startIdx = hasHeader ? 1 : 0;
 
   for (let i = startIdx; i < data.length; i++) {
@@ -140,7 +147,8 @@ function handleRemoveGuest(name) {
 function handleUpdateRsvp(name, rsvp) {
   const sheet = getSheet();
   const data = sheet.getDataRange().getValues();
-  const hasHeader = data.length > 0 && data[0][0].toString().toLowerCase().trim() === "name";
+  const hasHeader =
+    data.length > 0 && data[0][0].toString().toLowerCase().trim() === "name";
   const startIdx = hasHeader ? 1 : 0;
 
   for (let i = startIdx; i < data.length; i++) {
@@ -159,4 +167,46 @@ function jsonResponse(data, code) {
   return ContentService.createTextOutput(JSON.stringify(data)).setMimeType(
     ContentService.MimeType.JSON,
   );
+}
+
+function handleUpdateGuest(originalName, guest) {
+  const sheet = getSheet();
+  const data = sheet.getDataRange().getValues();
+  const hasHeader =
+    data.length > 0 && data[0][0].toString().toLowerCase().trim() === "name";
+  const startIdx = hasHeader ? 1 : 0;
+
+  for (let i = startIdx; i < data.length; i++) {
+    if (
+      data[i][0].toString().toLowerCase().trim() ===
+      originalName.toLowerCase().trim()
+    ) {
+      const row = i + 1;
+      sheet.getRange(row, 1).setValue(guest.name || data[i][0]);
+      sheet.getRange(row, 2).setValue(guest.side || data[i][1]);
+      sheet.getRange(row, 3).setValue(guest.rsvp || data[i][2]);
+      sheet
+        .getRange(row, 6)
+        .setValue(guest.email !== undefined ? guest.email : data[i][5]);
+      sheet
+        .getRange(row, 7)
+        .setValue(guest.phone !== undefined ? guest.phone : data[i][6]);
+      sheet
+        .getRange(row, 8)
+        .setValue(guest.plusOnes !== undefined ? guest.plusOnes : data[i][7]);
+      sheet
+        .getRange(row, 9)
+        .setValue(
+          guest.dietaryRestrictions !== undefined
+            ? guest.dietaryRestrictions
+            : data[i][8],
+        );
+      sheet
+        .getRange(row, 10)
+        .setValue(guest.notes !== undefined ? guest.notes : data[i][9]);
+      return jsonResponse({ success: true });
+    }
+  }
+
+  return jsonResponse({ error: "Guest not found" });
 }

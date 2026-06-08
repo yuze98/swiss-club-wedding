@@ -6,6 +6,7 @@ import {
   addGuestToSheet,
   removeGuestFromSheet,
   updateRsvpInSheet,
+  updateGuestInSheet,
 } from '../services/googleSheets';
 
 const STORAGE_KEY = 'swiss-club-wedding-guests';
@@ -159,12 +160,31 @@ export default function useGuestList() {
 
   const clearError = useCallback(() => setError(null), []);
 
+  const updateGuest = useCallback(async (id, updates) => {
+    setError(null);
+    const guest = guests.find((g) => g.id === id);
+    if (!guest) return { success: false, error: 'Guest not found' };
+
+    const updatedGuest = { ...guest, ...updates };
+    setGuests((prev) => prev.map((g) => (g.id === id ? updatedGuest : g)));
+
+    try {
+      await updateGuestInSheet(guest.name, updates);
+      return { success: true };
+    } catch (e) {
+      // Revert on failure
+      setGuests((prev) => prev.map((g) => (g.id === id ? guest : g)));
+      setError('Failed to update guest. Please try again.');
+      return { success: false, error: e.message };
+    }
+  }, [guests]);
+
   const counts = {
-    total: guests.length,
-    confirmed: guests.filter((g) => g.rsvp === 'confirmed').length,
-    pending: guests.filter((g) => g.rsvp === 'pending').length,
-    declined: guests.filter((g) => g.rsvp === 'declined').length,
+    total: guests.reduce((sum, g) => sum + 1 + (Number(g.plusOnes) || 0), 0),
+    confirmed: guests.filter((g) => g.rsvp === 'confirmed').reduce((sum, g) => sum + 1 + (Number(g.plusOnes) || 0), 0),
+    pending: guests.filter((g) => g.rsvp === 'pending').reduce((sum, g) => sum + 1 + (Number(g.plusOnes) || 0), 0),
+    declined: guests.filter((g) => g.rsvp === 'declined').reduce((sum, g) => sum + 1 + (Number(g.plusOnes) || 0), 0),
   };
 
-  return { guests, addGuest, removeGuest, updateRsvp, counts, loading, error, clearError, refresh: loadGuests };
+  return { guests, addGuest, removeGuest, updateGuest, updateRsvp, counts, loading, error, clearError, refresh: loadGuests };
 }

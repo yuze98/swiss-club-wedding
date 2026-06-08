@@ -103,3 +103,25 @@ export async function updateRsvpInSheet(name, rsvp) {
   if (data.error) throw new Error(data.error);
   return data;
 }
+
+/**
+ * Update a guest's details in Google Sheets.
+ */
+export async function updateGuestInSheet(originalName, guest) {
+  const response = await fetch(BASE_URL, {
+    method: 'POST',
+    redirect: 'follow',
+    headers: { 'Content-Type': 'text/plain' },
+    body: JSON.stringify({ action: 'updateGuest', originalName, guest }),
+  });
+  const text = await response.text();
+  let data;
+  try {
+    data = JSON.parse(text);
+  } catch (e) {
+    console.error('updateGuest response was not JSON:', text.substring(0, 500));
+    throw new Error('Failed to update guest');
+  }
+  if (data.error) throw new Error(data.error);
+  return data;
+}

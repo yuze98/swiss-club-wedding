@@ -5,7 +5,7 @@ import venue from '../assets/images/venue.png';
 const venueDetails = [
   { icon: '📍', label: 'Location', value: 'Swiss Club, Cairo, Egypt' },
   { icon: '📅', label: 'Date', value: 'August 21, 2026' },
-  { icon: '🕕', label: 'Time', value: '6:00 PM' },
+  { icon: '🕕', label: 'Time', value: '7:00 PM' },
   { icon: '👗', label: 'Dress Code', value: 'Formal / Black Tie' },
 ];
 
