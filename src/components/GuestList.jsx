@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import useGuestList from '../hooks/useGuestList';
 import useFadeIn from '../hooks/useFadeIn';
+import { validateGuestName } from '../utils/validation';
 
 const RSVP_COLORS = {
   confirmed: 'text-emerald-600 bg-emerald-50',
@@ -15,18 +16,47 @@ const RSVP_LABELS = {
 };
 
 export default function GuestList() {
-  const { guests, addGuest, removeGuest, updateRsvp, counts } = useGuestList();
+  const { guests, addGuest, removeGuest, updateRsvp, counts, loading, error, clearError } = useGuestList();
   const [name, setName] = useState('');
   const [side, setSide] = useState('both');
+  const [email, setEmail] = useState('');
+  const [phone, setPhone] = useState('');
+  const [plusOnes, setPlusOnes] = useState(0);
+  const [dietaryRestrictions, setDietaryRestrictions] = useState('');
+  const [notes, setNotes] = useState('');
   const [filter, setFilter] = useState('all');
   const [search, setSearch] = useState('');
+  const [validationError, setValidationError] = useState('');
   const ref = useFadeIn();
 
-  const handleAdd = (e) => {
+  const handleAdd = async (e) => {
     e.preventDefault();
-    if (!name.trim()) return;
-    addGuest(name, side);
-    setName('');
+    setValidationError('');
+    clearError();
+
+    // Client-side validation
+    const validation = validateGuestName(name);
+    if (!validation.valid) {
+      setValidationError(validation.error);
+      return;
+    }
+
+    const result = await addGuest(name, side, {
+      email,
+      phone,
+      plusOnes: Number(plusOnes) || 0,
+      dietaryRestrictions,
+      notes,
+    });
+
+    if (result.success) {
+      setName('');
+      setEmail('');
+      setPhone('');
+      setPlusOnes(0);
+      setDietaryRestrictions('');
+      setNotes('');
+    }
   };
 
   const filtered = guests.filter((g) => {
@@ -62,28 +92,90 @@ export default function GuestList() {
         {/* Add Guest Form */}
         <form onSubmit={handleAdd} className="bg-white border border-[var(--gold-light)] p-6 mb-8">
           <h3 className="font-display text-xl italic mb-4">Add a Guest</h3>
-          <div className="flex flex-col sm:flex-row gap-3">
-            <input
-              type="text"
-              value={name}
-              onChange={(e) => setName(e.target.value)}
-              placeholder="Guest name"
-              className="flex-1 border border-gray-200 px-4 py-2 font-body text-sm focus:outline-none focus:border-gold"
-            />
-            <select
-              value={side}
-              onChange={(e) => setSide(e.target.value)}
-              className="border border-gray-200 px-4 py-2 font-body text-sm focus:outline-none focus:border-gold bg-white"
-            >
-              <option value="both">Both Sides</option>
-              <option value="bride">Bride's Side</option>
-              <option value="groom">Groom's Side</option>
-            </select>
+
+          {/* Error Messages */}
+          {(validationError || error) && (
+            <div className="mb-4 px-4 py-2 bg-red-50 border border-red-200 text-red-600 font-body text-sm rounded">
+              {validationError || error}
+            </div>
+          )}
+
+          <div className="flex flex-col gap-3">
+            <div className="flex flex-col sm:flex-row gap-3">
+              <input
+                type="text"
+                value={name}
+                onChange={(e) => { setName(e.target.value); setValidationError(''); }}
+                placeholder="Guest name *"
+                className="flex-1 border border-gray-200 px-4 py-2 font-body text-sm focus:outline-none focus:border-gold"
+                disabled={loading}
+              />
+              <select
+                value={side}
+                onChange={(e) => setSide(e.target.value)}
+                className="border border-gray-200 px-4 py-2 font-body text-sm focus:outline-none focus:border-gold bg-white"
+                disabled={loading}
+              >
+                <option value="both">Both Sides</option>
+                <option value="bride">Bride's Side</option>
+                <option value="groom">Groom's Side</option>
+              </select>
+            </div>
+
+            <div className="flex flex-col sm:flex-row gap-3">
+              <input
+                type="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                placeholder="Email (optional)"
+                className="flex-1 border border-gray-200 px-4 py-2 font-body text-sm focus:outline-none focus:border-gold"
+                disabled={loading}
+              />
+              <input
+                type="tel"
+                value={phone}
+                onChange={(e) => setPhone(e.target.value)}
+                placeholder="Phone (optional)"
+                className="flex-1 border border-gray-200 px-4 py-2 font-body text-sm focus:outline-none focus:border-gold"
+                disabled={loading}
+              />
+              <input
+                type="number"
+                value={plusOnes}
+                onChange={(e) => setPlusOnes(e.target.value)}
+                placeholder="Plus ones"
+                min="0"
+                max="10"
+                className="w-24 border border-gray-200 px-4 py-2 font-body text-sm focus:outline-none focus:border-gold"
+                disabled={loading}
+              />
+            </div>
+
+            <div className="flex flex-col sm:flex-row gap-3">
+              <input
+                type="text"
+                value={dietaryRestrictions}
+                onChange={(e) => setDietaryRestrictions(e.target.value)}
+                placeholder="Dietary restrictions (optional)"
+                className="flex-1 border border-gray-200 px-4 py-2 font-body text-sm focus:outline-none focus:border-gold"
+                disabled={loading}
+              />
+              <input
+                type="text"
+                value={notes}
+                onChange={(e) => setNotes(e.target.value)}
+                placeholder="Notes (optional)"
+                className="flex-1 border border-gray-200 px-4 py-2 font-body text-sm focus:outline-none focus:border-gold"
+                disabled={loading}
+              />
+            </div>
+
             <button
               type="submit"
-              className="bg-gold text-white font-body text-xs tracking-widest uppercase px-6 py-2 hover:bg-[#b8963e] transition-colors"
+              disabled={loading}
+              className="self-end bg-gold text-white font-body text-xs tracking-widest uppercase px-6 py-2 hover:bg-[#b8963e] transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
             >
-              Add
+              {loading ? 'Adding...' : 'Add Guest'}
             </button>
           </div>
         </form>
@@ -152,7 +244,7 @@ export default function GuestList() {
         )}
 
         <p className="text-center font-body text-xs text-[var(--muted)] mt-6">
-          Guest list is saved automatically to this browser.
+          Guest list syncs automatically with Google Sheets.
         </p>
       </div>
     </section>
