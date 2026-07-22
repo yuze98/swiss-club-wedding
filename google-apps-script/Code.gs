@@ -13,9 +13,20 @@
  */
 
 const SHEET_NAME = "Sheet1";
+const RSVP_SHEET_NAME = "RSVP";
 
 function getSheet() {
   return SpreadsheetApp.getActiveSpreadsheet().getSheetByName(SHEET_NAME);
+}
+
+function getRsvpSheet() {
+  const ss = SpreadsheetApp.getActiveSpreadsheet();
+  let sheet = ss.getSheetByName(RSVP_SHEET_NAME);
+  if (!sheet) {
+    sheet = ss.insertSheet(RSVP_SHEET_NAME);
+    sheet.appendRow(["Name", "Phone", "Guests", "Date", "Time"]);
+  }
+  return sheet;
 }
 
 function doGet(e) {
@@ -39,6 +50,10 @@ function doPost(e) {
 
   if (action === "addGuest") {
     return handleAddGuest(data.guest);
+  }
+
+  if (action === "addRsvp") {
+    return handleAddRsvp(data.guest);
   }
 
   if (action === "removeGuest") {
@@ -161,6 +176,18 @@ function handleUpdateRsvp(name, rsvp) {
   }
 
   return jsonResponse({ error: "Guest not found" });
+}
+
+function handleAddRsvp(guest) {
+  const sheet = getRsvpSheet();
+  sheet.appendRow([
+    guest.name,
+    guest.phone || "",
+    guest.guests || 1,
+    new Date().toLocaleDateString(),
+    new Date().toLocaleTimeString(),
+  ]);
+  return jsonResponse({ success: true });
 }
 
 function jsonResponse(data, code) {

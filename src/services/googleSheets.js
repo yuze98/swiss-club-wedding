@@ -61,6 +61,28 @@ export async function addGuestToSheet(guest) {
 }
 
 /**
+ * Add an RSVP to the dedicated RSVP sheet.
+ */
+export async function addRsvpToSheet(guest) {
+  const response = await fetch(BASE_URL, {
+    method: 'POST',
+    redirect: 'follow',
+    headers: { 'Content-Type': 'text/plain' },
+    body: JSON.stringify({ action: 'addRsvp', guest }),
+  });
+  const text = await response.text();
+  let data;
+  try {
+    data = JSON.parse(text);
+  } catch (e) {
+    console.error('addRsvp response was not JSON:', text.substring(0, 500));
+    throw new Error('Failed to submit RSVP');
+  }
+  if (data.error) throw new Error(data.error);
+  return data;
+}
+
+/**
  * Remove a guest from Google Sheets.
  */
 export async function removeGuestFromSheet(name) {
