@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import Countdown from 'react-countdown';
+import confetti from 'canvas-confetti';
 import letterImg from '../assets/invitations/letter.JPG';
 import inviteOpenImg from '../assets/invitations/invite_open.JPG';
 import rsvpImg from '../assets/invitations/rsvp.JPG';
@@ -38,6 +39,11 @@ export default function Invitation() {
         guests: formData.guests,
       });
       setSubmitted(true);
+      // Fire confetti burst
+      const opts = { zIndex: 9999 };
+      confetti({ ...opts, particleCount: 150, spread: 80, origin: { y: 0.7 } });
+      setTimeout(() => confetti({ ...opts, particleCount: 80, spread: 100, origin: { y: 0.5, x: 0.3 } }), 300);
+      setTimeout(() => confetti({ ...opts, particleCount: 80, spread: 100, origin: { y: 0.5, x: 0.7 } }), 600);
     } catch (err) {
       setError(err.message || 'Something went wrong');
     } finally {
