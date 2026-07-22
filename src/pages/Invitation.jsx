@@ -224,7 +224,7 @@ export default function Invitation() {
         />
 
       {/* Form overlaid on the olive space (lower portion) */}
-      <div className="relative z-10 min-h-screen flex flex-col items-center justify-end pb-[50%] px-6">
+      <div className="relative z-10 min-h-screen flex flex-col items-center justify-end pb-[30%] px-6">
         {submitted ? (
           <div className="text-center animate-scaleIn space-y-3">
             <div className="text-4xl animate-float">✨</div>
