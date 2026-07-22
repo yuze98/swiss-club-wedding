@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Countdown from 'react-countdown';
 import confetti from 'canvas-confetti';
 import letterImg from '../assets/invitations/letter.jpg';
@@ -9,9 +9,42 @@ import envelopeImg from '../assets/invitations/ENVELOPE.png';
 import rsvpImg from '../assets/invitations/rsvp.jpg';
 import { addRsvpToSheet } from '../services/googleSheets';
 
+const PRELOAD_IMAGES = [
+  letterImg,
+  backgroundImg,
+  birdsImg,
+  countdownImg,
+  envelopeImg,
+  rsvpImg,
+];
+
 export default function Invitation() {
   const [stage, setStage] = useState('envelope'); // envelope | invite | rsvp
   const [fading, setFading] = useState(false);
+  const [ready, setReady] = useState(false);
+
+  // Preload every invitation image so the animations play on fully-loaded
+  // images instead of janky, progressively-loading ones on first visit.
+  useEffect(() => {
+    let cancelled = false;
+    let loaded = 0;
+    const done = () => {
+      loaded += 1;
+      if (!cancelled && loaded >= PRELOAD_IMAGES.length) setReady(true);
+    };
+    PRELOAD_IMAGES.forEach((src) => {
+      const img = new Image();
+      img.onload = done;
+      img.onerror = done;
+      img.src = src;
+    });
+    // Safety net: never block the experience for more than 6s.
+    const timer = setTimeout(() => !cancelled && setReady(true), 6000);
+    return () => {
+      cancelled = true;
+      clearTimeout(timer);
+    };
+  }, []);
 
   // RSVP form state
   const [formData, setFormData] = useState({ name: '', phone: '', guests: '1' });
@@ -54,6 +87,18 @@ export default function Invitation() {
     }
   };
 
+  // --- Loading screen (waits for all images to preload) ---
+  if (!ready) {
+    return (
+      <div className="min-h-screen bg-[#2c2418] flex items-center justify-center">
+        <div className="flex flex-col items-center gap-4">
+          <div className="w-10 h-10 border-2 border-white/20 border-t-white/70 rounded-full animate-spin" />
+          <p className="text-white/40 text-xs tracking-[0.3em] uppercase">Loading</p>
+        </div>
+      </div>
+    );
+  }
+
   // --- Envelope screen ---
   if (stage === 'envelope') {
     return (
@@ -65,7 +110,7 @@ export default function Invitation() {
           <img
             src={letterImg}
             alt="Wedding invitation envelope"
-            className="w-full md:max-w-[430px] max-h-screen object-cover animate-scaleIn hover:scale-[1.02] transition-transform duration-500"
+            className="w-full md:max-w-[430px] h-screen object-cover animate-scaleIn hover:scale-[1.02] transition-transform duration-500"
           />
         </div>
       </div>
@@ -179,7 +224,7 @@ export default function Invitation() {
         />
 
       {/* Form overlaid on the olive space (lower portion) */}
-      <div className="relative z-10 min-h-screen flex flex-col items-center justify-end pb-[10%] px-6">
+      <div className="relative z-10 min-h-screen flex flex-col items-center justify-end pb-[50%] px-6">
         {submitted ? (
           <div className="text-center animate-scaleIn space-y-3">
             <div className="text-4xl animate-float">✨</div>
