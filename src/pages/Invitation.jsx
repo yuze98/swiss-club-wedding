@@ -1,9 +1,12 @@
 import { useState } from 'react';
 import Countdown from 'react-countdown';
 import confetti from 'canvas-confetti';
-import letterImg from '../assets/invitations/letter.JPG';
-import inviteOpenImg from '../assets/invitations/invite_open.JPG';
-import rsvpImg from '../assets/invitations/rsvp.JPG';
+import letterImg from '../assets/invitations/letter.jpg';
+import backgroundImg from '../assets/invitations/BACKGROUND.jpg';
+import birdsImg from '../assets/invitations/BIRDS.png';
+import countdownImg from '../assets/invitations/COUNTDOWN.png';
+import envelopeImg from '../assets/invitations/ENVELOPE.png';
+import rsvpImg from '../assets/invitations/rsvp.jpg';
 import { addRsvpToSheet } from '../services/googleSheets';
 
 export default function Invitation() {
@@ -62,7 +65,7 @@ export default function Invitation() {
           <img
             src={letterImg}
             alt="Wedding invitation envelope"
-            className="w-full md:max-w-[430px] max-h-screen object-contain animate-scaleIn hover:scale-[1.02] transition-transform duration-500"
+            className="w-full md:max-w-[430px] max-h-screen object-cover animate-scaleIn hover:scale-[1.02] transition-transform duration-500"
           />
         </div>
       </div>
@@ -83,48 +86,75 @@ export default function Invitation() {
           >
             ← Back
           </button>
-          <div className="relative w-full md:max-w-[430px]">
+
+          {/* Main content area with background */}
+          <div className="relative w-full md:max-w-[430px] overflow-hidden">
+            {/* Background image */}
             <img
-              src={inviteOpenImg}
-              alt="Wedding invitation"
-              className="w-full object-contain animate-fadeIn"
+              src={backgroundImg}
+              alt=""
+              className="w-full object-contain"
             />
 
-            {/* Countdown overlay — positioned below "The Countdown is on!" text */}
-          <div className="absolute left-0 right-0 flex justify-center opacity-0 animate-slideUp-delay-2" style={{ top: '39%' }}>
-            <Countdown
-              date={new Date('2026-08-21T18:30:00')}
-              renderer={({ days, hours, minutes, seconds }) => (
-                <div className="flex gap-3 sm:gap-5">
-                  {[
-                    { value: days, label: 'Days' },
-                    { value: hours, label: 'Hours' },
-                    { value: minutes, label: 'Min' },
-                    { value: seconds, label: 'Sec' },
-                  ].map(({ value, label }) => (
-                    <div key={label} className="flex flex-col items-center">
-                      <div className="bg-black/40 backdrop-blur-sm border border-white/20 rounded-lg px-3 py-2 sm:px-4 sm:py-3 min-w-[48px] sm:min-w-[64px]">
-                        <span className="font-display text-2xl sm:text-4xl text-white tabular-nums">
-                          {String(value).padStart(2, '0')}
+            {/* Birds (fade in at the top) */}
+            <div className="absolute top-[-1%] left-[-5%] right-0 opacity-0 animate-fadeIn-delay-1">
+              <img src={birdsImg} alt="Doves" className="w-[80%] mx-auto" />
+            </div>
+
+            {/* Envelope (fades in from the bottom) */}
+            <div className="absolute top-[8%] left-14 translate-x-1/2 w-[72%] opacity-0 animate-slideUp-delay-2">
+              <img src={envelopeImg} alt="Envelope" className="w-full" />
+            </div>
+
+            {/* Countdown text image */}
+            <div className="absolute top-[27%] left-0 right-0 opacity-0 animate-fadeIn-delay-3">
+              <img src={countdownImg} alt="The Countdown is on!" className="w-[64%] mx-auto" />
+            </div>
+
+            {/* Countdown numbers */}
+            <div className="absolute top-[37%] left-0 right-0 flex justify-center opacity-0 animate-fadeIn-delay-3">
+              <Countdown
+                date={new Date('2026-08-21T18:30:00')}
+                renderer={({ days, hours, minutes, seconds }) => (
+                  <div className="flex gap-3 sm:gap-5">
+                    {[
+                      { value: days, label: 'Days' },
+                      { value: hours, label: 'Hours' },
+                      { value: minutes, label: 'Min' },
+                      { value: seconds, label: 'Sec' },
+                    ].map(({ value, label }) => (
+                      <div key={label} className="flex flex-col items-center">
+                        <div className="bg-black/40 backdrop-blur-sm border border-white/20 rounded-lg px-3 py-2 sm:px-4 sm:py-3 min-w-[48px] sm:min-w-[64px]">
+                          <span className="font-display text-2xl sm:text-4xl text-white tabular-nums">
+                            {String(value).padStart(2, '0')}
+                          </span>
+                        </div>
+                        <span className="text-white/60 text-[10px] sm:text-xs uppercase tracking-widest mt-1">
+                          {label}
                         </span>
                       </div>
-                      <span className="text-white/60 text-[10px] sm:text-xs uppercase tracking-widest mt-1">
-                        {label}
-                      </span>
-                    </div>
-                  ))}
-                </div>
-              )}
+                    ))}
+                  </div>
+                )}
+              />
+            </div>
+
+            {/* Clickable Swiss Club location area — opens Google Maps */}
+            <a
+              href="https://maps.app.goo.gl/LwkjD5PJakFfW7qE9"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="absolute top-[63%] left-1/2 -translate-x-1/2 w-[80%] h-[20%] z-10 cursor-pointer"
+              aria-label="Open Swiss Club location in Google Maps"
+            />
+
+            {/* Clickable Kindly RSVP tray area at the bottom */}
+            <button
+              onClick={() => fadeToStage('rsvp')}
+              className="absolute bottom-[1%] left-1/2 -translate-x-1/2 w-[80%] h-[11%] cursor-pointer opacity-0 z-10"
+              aria-label="RSVP"
             />
           </div>
-
-          {/* Clickable Kindly RSVP tray area at the bottom */}
-          <button
-            onClick={() => fadeToStage('rsvp')}
-            className="absolute bottom-[0%] left-1/2 -translate-x-1/2 w-[80%] h-[14%] cursor-pointer opacity-0"
-            aria-label="RSVP"
-          />
-        </div>
         </div>
       </div>
     );
@@ -174,15 +204,7 @@ export default function Invitation() {
                   className="w-full bg-white/10 border-b border-white/30 text-white placeholder-white/40 text-center py-3 px-4 rounded-t-md outline-none focus:border-white/70 focus:bg-white/15 transition-[background-color,border-color] duration-200"
                 />
               </div>
-              <div className="relative">
-                <input
-                  type="tel"
-                  placeholder="Phone Number"
-                  value={formData.phone}
-                  onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
-                  className="w-full bg-white/10 border-b border-white/30 text-white placeholder-white/40 text-center py-3 px-4 outline-none focus:border-white/70 focus:bg-white/15 transition-[background-color,border-color] duration-200"
-                />
-              </div>
+              
               <div className="relative">
                 <select
                   value={formData.guests}
