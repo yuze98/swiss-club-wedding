@@ -1,23 +1,25 @@
-import Navbar from './components/Navbar';
-import Hero from './components/Hero';
-import Countdown from './components/Countdown';
-import OurStory from './components/OurStory';
-import Venue from './components/Venue';
-import GuestList from './components/GuestList';
-import Footer from './components/Footer';
+import { HashRouter, Routes, Route, Navigate } from 'react-router-dom';
+import Home from './pages/Home';
+import Sec from './pages/Sec';
+import SecGate from './pages/SecGate';
+import Invitation from './pages/Invitation';
 import './index.css';
+
+function ProtectedSec() {
+  const unlocked = sessionStorage.getItem('sec_unlocked') === 'true';
+  return unlocked ? <Sec /> : <Navigate to="/sec-gate" replace />;
+}
 
 function App() {
   return (
-    <div className="font-body bg-cream min-h-screen">
-      <Navbar />
-      <Hero />
-      <Countdown />
-      <OurStory />
-      <Venue />
-      <GuestList />
-      <Footer />
-    </div>
+    <HashRouter>
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/sec-gate" element={<SecGate />} />
+        <Route path="/sec" element={<ProtectedSec />} />
+        <Route path="/invitation" element={<Invitation />} />
+      </Routes>
+    </HashRouter>
   );
 }
 
