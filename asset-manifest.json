@@ -1,23 +1,26 @@
 {
   "files": {
-    "main.css": "/swiss-club-wedding/static/css/main.3bdc171e.css",
-    "main.js": "/swiss-club-wedding/static/js/main.a790075b.js",
+    "main.css": "/swiss-club-wedding/static/css/main.d057a4a3.css",
+    "main.js": "/swiss-club-wedding/static/js/main.36beede0.js",
     "static/js/453.6fb34276.chunk.js": "/swiss-club-wedding/static/js/453.6fb34276.chunk.js",
     "static/media/proposal.gif": "/swiss-club-wedding/static/media/proposal.1d8f4fe6ba0d5a8ad1f7.gif",
+    "static/media/BACKGROUND.jpg": "/swiss-club-wedding/static/media/BACKGROUND.f752993d03e05147e9b0.jpg",
+    "static/media/ENVELOPE.png": "/swiss-club-wedding/static/media/ENVELOPE.c296bf9c1bb797cdf207.png",
     "static/media/venue.png": "/swiss-club-wedding/static/media/venue.a1ca305155f620cd175e.png",
-    "static/media/letter.JPG": "/swiss-club-wedding/static/media/letter.945acbe747c9e5b96784.JPG",
-    "static/media/invite_open.JPG": "/swiss-club-wedding/static/media/invite_open.fb6be211ee3f6128ea41.JPG",
+    "static/media/letter.jpg": "/swiss-club-wedding/static/media/letter.8838d42abf8cf163a01d.jpg",
+    "static/media/rsvp.jpg": "/swiss-club-wedding/static/media/rsvp.1216314efd3dd319d323.jpg",
     "static/media/the-batman.jpg": "/swiss-club-wedding/static/media/the-batman.6d6ca036057ff019d03b.jpg",
     "static/media/swiss.png": "/swiss-club-wedding/static/media/swiss.6bda8912f8e5ccfa1de7.png",
-    "static/media/rsvp.JPG": "/swiss-club-wedding/static/media/rsvp.c256f62a2b3bec3e9661.JPG",
     "static/media/iy.jpeg": "/swiss-club-wedding/static/media/iy.b4708a8d67a72e6aa7b3.jpeg",
+    "static/media/BIRDS.png": "/swiss-club-wedding/static/media/BIRDS.e4e8bde6352cd301b916.png",
+    "static/media/COUNTDOWN.png": "/swiss-club-wedding/static/media/COUNTDOWN.25f812a6b0cb7425c2e4.png",
     "index.html": "/swiss-club-wedding/index.html",
-    "main.3bdc171e.css.map": "/swiss-club-wedding/static/css/main.3bdc171e.css.map",
-    "main.a790075b.js.map": "/swiss-club-wedding/static/js/main.a790075b.js.map",
+    "main.d057a4a3.css.map": "/swiss-club-wedding/static/css/main.d057a4a3.css.map",
+    "main.36beede0.js.map": "/swiss-club-wedding/static/js/main.36beede0.js.map",
     "453.6fb34276.chunk.js.map": "/swiss-club-wedding/static/js/453.6fb34276.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.3bdc171e.css",
-    "static/js/main.a790075b.js"
+    "static/css/main.d057a4a3.css",
+    "static/js/main.36beede0.js"
   ]
 }
