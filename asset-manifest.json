@@ -1,20 +1,23 @@
 {
   "files": {
-    "main.css": "/swiss-club-wedding/static/css/main.d61d1132.css",
-    "main.js": "/swiss-club-wedding/static/js/main.9489a1eb.js",
-    "static/js/453.f17627bf.chunk.js": "/swiss-club-wedding/static/js/453.f17627bf.chunk.js",
+    "main.css": "/swiss-club-wedding/static/css/main.3bdc171e.css",
+    "main.js": "/swiss-club-wedding/static/js/main.1e36ebe3.js",
+    "static/js/453.6fb34276.chunk.js": "/swiss-club-wedding/static/js/453.6fb34276.chunk.js",
     "static/media/proposal.gif": "/swiss-club-wedding/static/media/proposal.1d8f4fe6ba0d5a8ad1f7.gif",
     "static/media/venue.png": "/swiss-club-wedding/static/media/venue.a1ca305155f620cd175e.png",
+    "static/media/letter.JPG": "/swiss-club-wedding/static/media/letter.945acbe747c9e5b96784.JPG",
+    "static/media/invite_open.JPG": "/swiss-club-wedding/static/media/invite_open.fb6be211ee3f6128ea41.JPG",
     "static/media/the-batman.jpg": "/swiss-club-wedding/static/media/the-batman.6d6ca036057ff019d03b.jpg",
     "static/media/swiss.png": "/swiss-club-wedding/static/media/swiss.6bda8912f8e5ccfa1de7.png",
+    "static/media/rsvp.JPG": "/swiss-club-wedding/static/media/rsvp.c256f62a2b3bec3e9661.JPG",
     "static/media/iy.jpeg": "/swiss-club-wedding/static/media/iy.b4708a8d67a72e6aa7b3.jpeg",
     "index.html": "/swiss-club-wedding/index.html",
-    "main.d61d1132.css.map": "/swiss-club-wedding/static/css/main.d61d1132.css.map",
-    "main.9489a1eb.js.map": "/swiss-club-wedding/static/js/main.9489a1eb.js.map",
-    "453.f17627bf.chunk.js.map": "/swiss-club-wedding/static/js/453.f17627bf.chunk.js.map"
+    "main.3bdc171e.css.map": "/swiss-club-wedding/static/css/main.3bdc171e.css.map",
+    "main.1e36ebe3.js.map": "/swiss-club-wedding/static/js/main.1e36ebe3.js.map",
+    "453.6fb34276.chunk.js.map": "/swiss-club-wedding/static/js/453.6fb34276.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.d61d1132.css",
-    "static/js/main.9489a1eb.js"
+    "static/css/main.3bdc171e.css",
+    "static/js/main.1e36ebe3.js"
   ]
 }
